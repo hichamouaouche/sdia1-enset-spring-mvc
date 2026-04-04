@@ -11,8 +11,8 @@
 </head>
 <body>
 <div class="p-3" layout:fragment="content1">
+    <form th:action="@{/admin/saveProduct}" method="post">
 
-    <form th:action="@{/saveProduct}" method="post">
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
             <input type="text" class="form-control" id="name" name="name" th:value="${product.name}">
