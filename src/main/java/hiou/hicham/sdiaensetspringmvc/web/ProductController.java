@@ -2,15 +2,21 @@ package hiou.hicham.sdiaensetspringmvc.web;
 
 import hiou.hicham.sdiaensetspringmvc.entities.Product;
 import hiou.hicham.sdiaensetspringmvc.repository.ProductRepository;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @Controller
+
 public class ProductController {
     private final ProductRepository productRepository;
 
@@ -41,6 +47,25 @@ public class ProductController {
         model.addAttribute("product", new Product());
         return "new-product";
     }
+/*
+    @PostMapping("/saveProduct")
+    public String saveProduct(@Valid Product product, BindingResult bindingResult, Model model){
+         if(bindingResult.hasErrors()) return "new-product";
+         productRepository.save(product);
+         return "redirect:/newProduct";
+
+    }
+*/
+   @PostMapping("/saveProduct")
+
+   public String saveProduct(@Valid Product product, BindingResult bindingResult) {
+       if (bindingResult.hasErrors()) {
+           return "new-product";
+       }
+       productRepository.save(product);
+       return "redirect:/index";
+   }
 
 
 }
+
