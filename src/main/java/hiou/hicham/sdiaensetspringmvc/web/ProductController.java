@@ -2,16 +2,14 @@ package hiou.hicham.sdiaensetspringmvc.web;
 
 import hiou.hicham.sdiaensetspringmvc.entities.Product;
 import hiou.hicham.sdiaensetspringmvc.repository.ProductRepository;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,7 +35,7 @@ public class ProductController {
         return "redirect:/user/index";
     }
 
-    @GetMapping("/admin/delete")
+    @PostMapping("/admin/delete")
     public String delete(@RequestParam(name = "id") Long id) {
         productRepository.deleteById(id);
         return "redirect:/user/index";
@@ -71,5 +69,18 @@ public class ProductController {
        return "notauthorized";
 
    }
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+
+    }
+    @GetMapping("/logout")
+    public String logout(HttpSession session)  {
+       session.invalidate();
+       return "login";
+
+    }
+
+
 }
 
